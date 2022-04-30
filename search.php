@@ -18,12 +18,7 @@
 	<?php 
 		include "lib.php";
 
-		$search = $_POST['search'];
-
-		$sql = "SELECT * FROM board WHERE title = '$search'";
-		$result = mysqli_query($connect,$sql);
-		
-		if($_POST['option'] == 'title')
+		function db($result)
 		{
 			while($data = mysqli_fetch_array($result)) {
 				?>
@@ -35,22 +30,22 @@
 				</tr>
 				<?php
 				}
+		}
+
+		$search = $_POST['search'];
+
+		$sql = "SELECT * FROM board WHERE title = '$search'";
+		$result = mysqli_query($connect,$sql);
+		
+		if($_POST['option'] == 'title')
+		{
+			db($result);
 				
 		}
 		elseif($_POST['option'] == 'contents') {
 			$sql = "SELECT * FROM board WHERE contents = '$search'";
 			$result = mysqli_query($connect,$sql);
-			while($data = mysqli_fetch_array($result)) {
-				?>
-				<tr>
-					<td> <?= $data['idx']?> </td>
-					<td><a href="/P4C_W1-master/P4C_W1-master/crud/read.php?idx=<?= $data['idx'] ?>"><?= $data['title']?></a></td>
-					<td><?=$data['user']?></td>
-					<td><?=$data['time']?></td>
-				</tr>
-
-				<?php
-				}
+			db($result);
 		}
 
 		?>
