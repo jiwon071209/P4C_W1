@@ -84,10 +84,16 @@
 	?>
 
 	<?php 
-		$view = $data['view'] + 1;
-		$sql = "UPDATE board  set view='$view' WHERE idx='$idx'";
-
-		mysqli_query($connect,$sql);
+		$idx = $_GET['idx'];
+		if(!isset($_COOKIE['board_'.$idx]))
+		{
+			$view = $data['view'] + 1;
+			$sql = "UPDATE board  set view='$view' WHERE idx='$idx'";
+			mysqli_query($connect,$sql);
+			setcookie('board_'.$idx,$idx,time() + 3600);
+		}
+		
+		
 	?>
 	
 </body>
